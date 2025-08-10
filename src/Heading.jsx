@@ -55,7 +55,7 @@ export default function Heading() {
         }}
       >
         <textPath href="#curveMain" startOffset="50%" textAnchor="middle">
-          Priyaneel Motors
+          PriyaNil Motors
         </textPath>
       </motion.text>
 
@@ -73,7 +73,7 @@ export default function Heading() {
         }}
       >
         <textPath href="#curveSub" startOffset="50%" textAnchor="middle">
-          Premium Bikes & Services
+          Sales & Services
         </textPath>
       </motion.text>
     </svg>

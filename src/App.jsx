@@ -6,11 +6,16 @@ import CongratsModal from "./CongratsModal";
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [showWinModal, setWinModal] = useState(false);
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
     localStorage.clear();
     setIsOpen(true);
   }, []);
+
+  const showResultFun = (data) => {
+    setResult(data);
+  };
 
   const showCongratsModal = (data) => {
     setWinModal(true);
@@ -31,7 +36,7 @@ function App() {
     <div className="relative min-h-screen flex items-center justify-center bg-gray-100">
       {/* Background Wheel Game */}
       <div className={isOpen ? "blur-sm pointer-events-none" : ""}>
-        <WheelGame showCongratsModal={showCongratsModal} />
+        <WheelGame showCongratsModal={showCongratsModal} showResultFun={showResultFun} />
       </div>
 
       {/* Modal */}
@@ -42,7 +47,7 @@ function App() {
       )}
       {showWinModal && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <CongratsModal isOpen={showWinModal} handleModal={handleCongratsModal} />
+          <CongratsModal isOpen={showWinModal} handleModal={handleCongratsModal} result={result} />
         </div>
       )}
     </div>

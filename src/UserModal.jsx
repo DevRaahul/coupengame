@@ -2,11 +2,11 @@ import { useState } from "react";
 
 const UserModal = ({ handleModal }) => {
   const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const [bike, setBike] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleModal({ Name: name, Bike: password });
+    handleModal({ name, bike });
   };
 
   return (
@@ -28,8 +28,8 @@ const UserModal = ({ handleModal }) => {
               <input
                 type="text"
                 placeholder="Vehicle Name"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={bike}
+                onChange={(e) => setBike(e.target.value)}
                 className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                 required
               />

@@ -2,7 +2,7 @@ import { useState } from "react";
 import confetti from "canvas-confetti";
 import Heading from "./Heading";
 
-const slices = ["Cashback 1%", "Cashback 2%", "Cashback 5%", "Free Service X1", "Free Service X2", "Gift 1", "Gift 2", "Gift 3"];
+const slices = ["Gift 1", "Cashback 5%", "Free Service X1", "Gift 2", "Cashback 2%", "Free Service X2", "Gift 3", "Cashback 1%"];
 const colors = ["#0046FF", "#FF7A30", "#640D5F", "#447D9B", "#EA5B6F", "#F3C623", "#06923E", "#B771E5"];
 const size = 500; // Changed to 500
 const radius = size / 2;
@@ -31,9 +31,8 @@ const describeArc = (startAngle, endAngle) => {
   return [`M ${radius} ${radius}`, `L ${start.x} ${start.y}`, `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${end.x} ${end.y}`, "Z"].join(" ");
 };
 
-const WheelGame = ({ showCongratsModal }) => {
+const WheelGame = ({ showCongratsModal, showResultFun }) => {
   const [rotation, setRotation] = useState(0);
-  const [result, setResult] = useState(null);
   const [isSpinning, setIsSpinning] = useState(false);
 
   const spin = () => {
@@ -46,10 +45,10 @@ const WheelGame = ({ showCongratsModal }) => {
 
     setRotation(angleToStop);
     setIsSpinning(true);
-    setResult(null);
+    showResultFun(null);
 
     setTimeout(() => {
-      setResult(slices[randomIndex]);
+      showResultFun(slices[randomIndex]);
       setIsSpinning(false);
       confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
       showCongratsModal();
@@ -59,8 +58,6 @@ const WheelGame = ({ showCongratsModal }) => {
   return (
     <div className="min-h-screen min-w-screen bg-gray-900 flex flex-col items-center justify-center text-white px-4">
       <Heading />
-      {/* <h3 className="text-4xl font-bold mb-12">🎡 Spin the Wheel</h3> */}
-
       <div className="relative" style={{ width: size, height: size, marginBottom: "1.5rem" }}>
         {/* Pointer */}
         <div
@@ -81,17 +78,6 @@ const WheelGame = ({ showCongratsModal }) => {
             return <path key={index} d={describeArc(startAngle, endAngle)} fill={colors[index % colors.length]} />;
           })}
 
-          {/* {slices.map((label, index) => {
-            const angle = (index + 0.5) * (360 / slices.length);
-            const rad = (angle - 90) * (Math.PI / 180);
-            const x = radius + (radius - size * 0.08) * Math.cos(rad);
-            const y = radius + (radius - size * 0.08) * Math.sin(rad);
-            return (
-              <text key={index} x={x} y={y} fill="white" fontSize={size * 0.035} fontWeight="bold" textAnchor="middle" alignmentBaseline="middle">
-                {label}
-              </text>
-            );
-          })} */}
           {/** Inside your SVG replace the text rendering block with this: */}
           <defs>
             {slices.map((label, index) => {
@@ -138,19 +124,12 @@ const WheelGame = ({ showCongratsModal }) => {
           }}
         />
       </div>
-
       <button
         onClick={spin}
-        className="px-6 py-3 text-lg font-semibold bg-gradient-to-r from-red-500 to-blue-500 text-white rounded-full shadow-lg hover:scale-105 transition-transform"
+        className="px-6 py-3 text-lg font-semibold bg-gradient-to-r from-blue-950 to-red-900 text-white rounded-full shadow-lg hover:scale-105 transition-transform"
       >
-        {"Spin 🎡 N Win 🎉"}
+        {"🎡 Spin N Win 🎉"}
       </button>
-
-      {result !== null && (
-        <p className="text-2xl">
-          🎉 You got: <span className="text-green-400 font-bold">{result}</span>
-        </p>
-      )}
     </div>
   );
 };

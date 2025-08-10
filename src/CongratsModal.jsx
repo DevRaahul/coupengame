@@ -1,25 +1,76 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
+// import { motion, AnimatePresence } from "framer-motion";
+
+// const CongratsModal = ({ isOpen, handleModal, result }) => {
+//   const [displayText, setDisplayText] = useState("");
+//   const message = result !== "" ? "🎆🥳Congratulations! You won! 🎯" + result : "🎆🥳Congratulations! You won! 🎯";
+
+//   useEffect(() => {
+//     if (isOpen) {
+//       setDisplayText("");
+//       let i = 0;
+//       const interval = setInterval(() => {
+//         setDisplayText((prev) => prev + message[i]);
+//         i++;
+//         if (i === message.length) clearInterval(interval);
+//       }, 80); // typing speed in ms
+//       return () => clearInterval(interval);
+//     }
+//   }, [isOpen]);
+
+//   return (
+//     <AnimatePresence>
+//       {isOpen && (
+//         <motion.div
+//           className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           exit={{ opacity: 0 }}
+//         >
+//           <motion.div
+//             className="bg-white rounded-lg p-8 max-w-md w-full text-center shadow-lg"
+//             initial={{ scale: 0.8, opacity: 0 }}
+//             animate={{ scale: 1, opacity: 1 }}
+//             exit={{ scale: 0.8, opacity: 0 }}
+//             transition={{ type: "spring", stiffness: 200, damping: 20 }}
+//           >
+//             <h2 className="text-2xl font-bold text-pink-500 mb-4">{displayText}</h2>
+//             <button onClick={handleModal} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+//               Reset
+//             </button>
+//           </motion.div>
+//         </motion.div>
+//       )}
+//     </AnimatePresence>
+//   );
+// };
+
+// export default CongratsModal;
 import { motion, AnimatePresence } from "framer-motion";
+import { useMemo } from "react";
 
-const CongratsModal = ({ isOpen, handleModal }) => {
-  const [displayText, setDisplayText] = useState("");
-  const message = "🎉 Congratulations! You won! 🎯";
+const CongratsModal = ({ isOpen, handleModal, result }) => {
+  const userData = JSON.parse(localStorage.getItem("data"));
+  let strData = `Congratulations! ${userData.name} You won!`;
+  let resultData = `${result} for your ${userData.bike}`;
 
-  useEffect(() => {
-    if (isOpen) {
-      setDisplayText("");
-      let i = 0;
-      const interval = setInterval(() => {
-        setDisplayText((prev) => prev + message[i]);
-        i++;
-        if (i === message.length) clearInterval(interval);
-      }, 80); // typing speed in ms
-      return () => clearInterval(interval);
-    }
-  }, [isOpen]);
+  const getLetters = (data) => {
+    let char = [];
+    char.push("🎊");
+    data.forEach((dt) => {
+      char.push(...dt.split(""));
+      char.push(" ");
+    });
+    char.push("🎊");
+    return char;
+  };
+
+  // Split into characters
+  const letters = getLetters(strData.split(" "));
+  const resultLetters = getLetters(resultData.split(" "));
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
         <motion.div
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
@@ -28,13 +79,43 @@ const CongratsModal = ({ isOpen, handleModal }) => {
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="bg-white rounded-lg p-8 max-w-md w-full text-center shadow-lg"
+            className="bg-white rounded-lg p-8 inline-block max-w-[90vw] whitespace-pre-wrap text-center shadow-lg"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
-            <h2 className="text-2xl font-bold text-pink-500 mb-4">{displayText}</h2>
+            <h2 className="text-3xl font-bold text-pink-500 mb-4 flex flex-wrap justify-center">
+              {letters.map((char, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: i * 0.05, // typing speed
+                    duration: 0.3,
+                  }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </h2>
+            <h3 className="text-2xl font-bold text-emerald-700 mb-4 flex flex-wrap justify-center">
+              {resultLetters.map((char, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: i * 0.05, // typing speed
+                    duration: 0.3,
+                  }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </h3>
+
             <button onClick={handleModal} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
               Reset
             </button>
