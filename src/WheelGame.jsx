@@ -3,7 +3,7 @@ import confetti from "canvas-confetti";
 import Heading from "./Heading";
 
 const slices = ["Cashback 1%", "Cashback 2%", "Cashback 5%", "Free Service X1", "Free Service X2", "Gift 1", "Gift 2", "Gift 3"];
-const colors = ["#0046FF", "#FF7A30", "#640D5F", "#447D9B", "#EA5B6F", "#9B177E", "#06923E", "#B771E5"];
+const colors = ["#0046FF", "#FF7A30", "#640D5F", "#447D9B", "#EA5B6F", "#F3C623", "#06923E", "#B771E5"];
 const size = 500; // Changed to 500
 const radius = size / 2;
 
@@ -42,7 +42,7 @@ const WheelGame = () => {
     const sliceAngle = 360 / slices.length;
     const randomIndex = Math.floor(Math.random() * slices.length);
     const offset = sliceAngle / 2;
-    const angleToStop = 360 * 5 + (360 - randomIndex * sliceAngle - offset);
+    let angleToStop = 360 * 10 + (360 - randomIndex * sliceAngle - offset);
 
     setRotation(angleToStop);
     setIsSpinning(true);
@@ -52,11 +52,7 @@ const WheelGame = () => {
       setResult(slices[randomIndex]);
       setIsSpinning(false);
       confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 5000);
-    }, 4000);
+    }, 8000);
   };
 
   return (
@@ -77,7 +73,7 @@ const WheelGame = () => {
           }}
         />
 
-        <svg width={size} height={size} className="transition-transform duration-[4s] ease-out" style={{ transform: `rotate(${rotation}deg)` }}>
+        <svg width={size} height={size} className="transition-transform duration-[8s] ease-out" style={{ transform: `rotate(${rotation}deg)` }}>
           {slices.map((label, index) => {
             const startAngle = (index * 360) / slices.length;
             const endAngle = ((index + 1) * 360) / slices.length;
