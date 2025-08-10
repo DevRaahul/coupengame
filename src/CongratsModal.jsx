@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function CongratsModal({ isOpen, onClose }) {
+const CongratsModal = ({ isOpen, handleModal }) => {
   const [displayText, setDisplayText] = useState("");
   const message = "🎉 Congratulations! You won! 🎯";
 
@@ -35,12 +35,14 @@ export default function CongratsModal({ isOpen, onClose }) {
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
             <h2 className="text-2xl font-bold text-pink-500 mb-4">{displayText}</h2>
-            <button onClick={onClose} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
-              Close
+            <button onClick={handleModal} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+              Reset
             </button>
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default CongratsModal;

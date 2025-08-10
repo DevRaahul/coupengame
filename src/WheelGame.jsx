@@ -31,7 +31,7 @@ const describeArc = (startAngle, endAngle) => {
   return [`M ${radius} ${radius}`, `L ${start.x} ${start.y}`, `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${end.x} ${end.y}`, "Z"].join(" ");
 };
 
-const WheelGame = () => {
+const WheelGame = ({ showCongratsModal }) => {
   const [rotation, setRotation] = useState(0);
   const [result, setResult] = useState(null);
   const [isSpinning, setIsSpinning] = useState(false);
@@ -52,6 +52,7 @@ const WheelGame = () => {
       setResult(slices[randomIndex]);
       setIsSpinning(false);
       confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+      showCongratsModal();
     }, 8000);
   };
 
