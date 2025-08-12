@@ -33,7 +33,7 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="relative min-h-screen flex items-center justify-center bg-gray-100 overflow-y-hidden">
       {/* Background Wheel Game */}
       <div className={isOpen ? "blur-sm pointer-events-none" : ""}>
         <WheelGame showCongratsModal={showCongratsModal} showResultFun={showResultFun} />

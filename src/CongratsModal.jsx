@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const CongratsModal = ({ isOpen, handleModal, result }) => {
   const userData = JSON.parse(localStorage.getItem("data"));
   let strData = `Congratulations! ${userData.name}!`;
-  let resultData = ` You won ${result} for your purchase of ${userData.bike}.`;
+  let resultData = `You won ${result} for your purchase of ${userData.bike}.`;
 
   const getLetters = (data) => {
     let char = [];
@@ -51,7 +51,7 @@ const CongratsModal = ({ isOpen, handleModal, result }) => {
                 </motion.span>
               ))}
             </h2>
-            <h3 className="text-2xl font-bold text-emerald-700 mb-4 flex flex-wrap justify-center">
+            <h3 className="text-xl font-bold text-emerald-700 mb-4 flex flex-wrap justify-center">
               {resultLetters.map((char, i) => (
                 <motion.span
                   key={i}
