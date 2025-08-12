@@ -2,7 +2,8 @@ import { useState } from "react";
 import confetti from "canvas-confetti";
 import Heading from "./Heading";
 
-const slices = ["Gift 1", "Cashback 5%", "Free Service X1", "Gift 2", "Cashback 2%", "Free Service X2", "Gift 3", "Cashback 1%"];
+const slices = ["Gift 1", "Cashback 5%", "Free Service x1", "Gift 2", "Cashback 2%", "Free Service x2", "Gift 3", "Cashback 1%"];
+const actualPrizeIndex = [0, 2, 3, 7];
 const colors = ["#0046FF", "#FF7A30", "#640D5F", "#447D9B", "#EA5B6F", "#F3C623", "#06923E", "#B771E5"];
 const size = 500; // Changed to 500
 const radius = size / 2;
@@ -39,10 +40,23 @@ const WheelGame = ({ showCongratsModal, showResultFun }) => {
     if (isSpinning) return;
 
     const sliceAngle = 360 / slices.length;
-    const randomIndex = Math.floor(Math.random() * slices.length);
+
+    let checkIndex = () => localStorage.getItem("index") || null;
+    if (checkIndex() === null) {
+      localStorage.setItem("index", 0);
+    }
+    let storedIndex = parseInt(localStorage.getItem("index"));
+
+    let randomIndex = actualPrizeIndex[storedIndex];
+    if (storedIndex === 3) {
+      localStorage.setItem("index", 0);
+    } else {
+      localStorage.setItem("index", storedIndex + 1);
+    }
+
     const offset = sliceAngle / 2;
     let angleToStop = 360 * 10 + (360 - randomIndex * sliceAngle - offset);
-
+    console.log("angle to stop=========>", angleToStop);
     setRotation(angleToStop);
     setIsSpinning(true);
     showResultFun(null);

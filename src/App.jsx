@@ -9,7 +9,7 @@ function App() {
   const [result, setResult] = useState(null);
 
   useEffect(() => {
-    localStorage.clear();
+    localStorage.removeItem("data");
     setIsOpen(true);
   }, []);
 
@@ -28,7 +28,7 @@ function App() {
   };
 
   const handleCongratsModal = () => {
-    localStorage.clear();
+    localStorage.removeItem("data");
     window.location.reload();
   };
 
