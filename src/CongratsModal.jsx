@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const CongratsModal = ({ isOpen, handleModal, result }) => {
   const userData = JSON.parse(localStorage.getItem("data"));
   let strData = `Congratulations! ${userData.name}!`;
-  let resultData = ` You won ${result} for your purchase.`;
+  let resultData = ` You won ${result} for your purchase of ${userData.bike}.`;
 
   const getLetters = (data) => {
     let char = [];
